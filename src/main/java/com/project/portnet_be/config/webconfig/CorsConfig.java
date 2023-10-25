@@ -1,4 +1,4 @@
-package com.project.portnet_be.config.cors;
+package com.project.portnet_be.config.webconfig;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

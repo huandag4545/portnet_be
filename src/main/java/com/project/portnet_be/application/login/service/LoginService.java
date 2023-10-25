@@ -30,12 +30,12 @@ import java.util.Base64;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Slf4j
-public class LoginService {
+    public class LoginService {
 
-    private final UserRepository userRepository;
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    private final JwtProvider jwtProvider;
-    private @Autowired BCryptPasswordEncoder bCryptPasswordEncoder;
+        private final UserRepository userRepository;
+        private final AuthenticationManagerBuilder authenticationManagerBuilder;
+        private final JwtProvider jwtProvider;
+        private @Autowired BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Transactional
     public ResponseEntity<JwtToken> login(LoginModel loginModel){

@@ -45,3 +45,13 @@ jwt:
   expiration-hours: 3
   issuer: hd0001
 
+springdoc:
+  packages-to-scan: com.project.portnet_be.application
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+  swagger-ui:
+    path: /swagger-ui/
+    show-actuator: true
+    disable-swagger-default-url: true
+    display-request-duration: true
+    operations-sorter: alpha

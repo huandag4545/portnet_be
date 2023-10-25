@@ -1,38 +1,47 @@
 package com.project.portnet_be.config.swagger;
 
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
+import org.springdoc.core.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import java.util.HashSet;
-import java.util.Set;
+
 
 @Configuration
-@EnableSwagger2
-public class SwaggerConfig {
+public class SwaggerConfig{
 
-
-    private ApiInfo swaggerInfo() {
-        return new ApiInfoBuilder().title("PortNet API")
-                .description("Portnet API Docs")
-                        .version("1.0").build();
-    }
 
     @Bean
-    public Docket swaggerApi() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.any())
-                .build()
-                .apiInfo(swaggerInfo());
+    public OpenAPI openAPI(){
+        SecurityScheme securityScheme = new SecurityScheme()
+                .type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT")
+                .in(SecurityScheme.In.HEADER).name("Authorization");
+        SecurityRequirement securityRequirement = new SecurityRequirement().addList("bearerAuth");
+        return new OpenAPI()
+                .components(new Components())
+                .info(apiInfo());
     }
+    @Bean
+    public GroupedOpenApi chatOpenApi(){
+        String[] path = {"/api/**"};
+
+        return GroupedOpenApi.builder()
+                .group("API 기동 v1")
+                .pathsToMatch(path)
+                .build();
+    }
+
+    private Info apiInfo(){
+        return new Info()
+                .title("PortNet API")
+                .description("Portnet API Docs")
+                .version("1.0.0");
+    }
+
+
 
 }
