@@ -60,8 +60,8 @@ import java.util.Base64;
 
         log.info("Header Setting");
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("ACCESTOKEN", jwtToken.getAccesToken());
-        httpHeaders.add("REFRESHTOKEN", jwtToken.getRefreshToken());
+        httpHeaders.add("X-ACCESS-TOKEN", jwtToken.getAccesToken());
+        httpHeaders.add("X-REFRESH-TOKEN", jwtToken.getRefreshToken());
         httpHeaders.add("NICKNAME", Base64.getEncoder().encodeToString(nicknameByte));
         httpHeaders.add("USERNAME", jwtToken.getUsername());
         httpHeaders.setContentType(new MediaType("application","json", Charset.forName("UTF-8")));

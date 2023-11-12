@@ -30,55 +30,24 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtProvider jwtProvider;
 
 
-
-//    @Override
-//    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-//        HttpServletRequest request = (HttpServletRequest) servletRequest;
-//        HttpServletResponse response = (HttpServletResponse) servletResponse;
-//        String accessToken = request.getHeader("ACCESTOKEN");
-//
-//        String path = request.getServletPath();
-//        log.info(path);
-//
-//        if (!path.contains("/swagger-ui/")) {
-//            if (accessToken != null && jwtProvider.validateToken(accessToken) == JwtCode.ACCESS) {
-//                Authentication authentication = jwtProvider.getAuthentication(accessToken);
-//                SecurityContextHolder.getContext().setAuthentication(authentication);
-//            } else if (accessToken != null && jwtProvider.validateToken(accessToken) == JwtCode.EXPIRED) {
-//                String refreshToken = request.getHeader("REFRESHTOKEN");
-//                if (refreshToken != null && jwtProvider.validateToken(refreshToken) == JwtCode.ACCESS) {
-//                    JwtToken jwtToken = jwtProvider.reissueRefreshToken(refreshToken);
-//                    response.setHeader("ACCESTOKEN", jwtToken.getAccesToken());
-//                    response.setHeader("REFRESHTOKEN", jwtToken.getRefreshToken());
-//                    response.setHeader("NICKNAME", Base64.getEncoder().encodeToString(jwtToken.getNickname().getBytes()));
-//                    response.setHeader("USERNAME", jwtToken.getUsername());
-//                    Authentication authentication = jwtProvider.getAuthentication(jwtToken.getAccesToken());
-//                    SecurityContextHolder.getContext().setAuthentication(authentication);
-//                    log.info("Succes reissue Token");
-//                }
-//            }
-//        }
-//
-//    }
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String accessToken = request.getHeader("ACCESTOKEN");
+        String accessToken = request.getHeader("X-ACCESS-TOKEN");
 
             if (accessToken != null && jwtProvider.validateToken(accessToken) == JwtCode.ACCESS) {
                 Authentication authentication = jwtProvider.getAuthentication(accessToken);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } else if (accessToken != null && jwtProvider.validateToken(accessToken) == JwtCode.EXPIRED) {
-                String refreshToken = request.getHeader("REFRESHTOKEN");
+                String refreshToken = request.getHeader("X-REFRESH-TOKEN");
                 if (refreshToken != null && jwtProvider.validateToken(refreshToken) == JwtCode.ACCESS) {
                     JwtToken jwtToken = jwtProvider.reissueRefreshToken(refreshToken);
-                    response.setHeader("ACCESTOKEN", jwtToken.getAccesToken());
-                    response.setHeader("REFRESHTOKEN", jwtToken.getRefreshToken());
+                    response.setHeader("X-ACCESS-TOKEN", jwtToken.getAccesToken());
+                    response.setHeader("X-REFRESH-TOKEN", jwtToken.getRefreshToken());
                     response.setHeader("NICKNAME", Base64.getEncoder().encodeToString(jwtToken.getNickname().getBytes()));
                     response.setHeader("USERNAME", jwtToken.getUsername());
                     Authentication authentication = jwtProvider.getAuthentication(jwtToken.getAccesToken());
                     SecurityContextHolder.getContext().setAuthentication(authentication);
-                    log.info("Succes reissue Token");
+                    log.info("Success reissue Token");
                 }
             }
 

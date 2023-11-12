@@ -1,5 +1,4 @@
 server:
-  port: 8090
   servlet:
     http:
       encoding:
@@ -8,37 +7,12 @@ server:
         force: true
 
 
-
 spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
-  datasource:
-    driverClassName: com.mysql.cj.jdbc.Driver
-    password: portnet
-    url: jdbc:mysql://localhost:3306/portnet_dev
-    username: portnet
-  devtools:
-    livereload:
-      enabled: true
-    restart:
-      enabled: true
-  jpa:
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        show_sql: true
-        use_sql_comments: true
 
 
-logging:
-  level:
-    org:
-      hibernate:
-        type:
-          descriptor:
-            sql: trace
 
 jwt:
   secret: VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa
